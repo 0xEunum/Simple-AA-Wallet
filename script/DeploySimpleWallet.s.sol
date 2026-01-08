@@ -6,16 +6,17 @@ import {EntryPointMock} from "src/EntryPointMock.sol";
 import {SimpleAccount} from "src/SimpleAccount.sol";
 
 contract DeploySimpleWallet is Script {
-    function run() public returns (address, address) {
+    function run() public returns (SimpleAccount, EntryPointMock) {
         vm.startBroadcast();
-        EntryPointMock entryPointMock = new EntryPointMock();
-        SimpleAccount account = new SimpleAccount(tx.origin, address(entryPointMock));
-        // SimpleAccount account = new SimpleAccount(msg.sender, address(entryPointMock));
+
+        EntryPointMock ep = new EntryPointMock();
+        SimpleAccount account = new SimpleAccount(msg.sender, address(ep));
+
         vm.stopBroadcast();
 
-        console2.log("tx origin", tx.origin);
-        console2.log("msg sender", msg.sender);
+        console2.log("msg.sender", msg.sender);
+        console2.log("tx.origin", tx.origin);
 
-        return (address(entryPointMock), address(account));
+        return (account, ep);
     }
 }
