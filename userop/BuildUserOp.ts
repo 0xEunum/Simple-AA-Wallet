@@ -1,19 +1,7 @@
 import { ethers } from "ethers";
 import { EntryPointABI } from "../utils/ABI/EntryPointABI";
-
-export type PackedUserOperation = {
-  sender: string;
-  nonce: bigint;
-  initCode: string;
-  callData: string;
-  callGasLimit: bigint;
-  verificationGasLimit: bigint;
-  preVerificationGas: bigint;
-  maxFeePerGas: bigint;
-  maxPriorityFeePerGas: bigint;
-  paymasterAndData: string;
-  signature: string;
-};
+import { Hex, PackedUserOperation, numberToHex } from "viem";
+import { Address } from "viem";
 
 export async function buildUserOp({
   provider,
@@ -24,11 +12,11 @@ export async function buildUserOp({
   data,
 }: {
   provider: ethers.JsonRpcProvider;
-  entryPoint: string;
-  sender: string;
-  target: string;
+  entryPoint: Address;
+  sender: Address;
+  target: Address;
   value?: bigint;
-  data: string;
+  data: Hex;
 }): Promise<PackedUserOperation> {
   const epContract = new ethers.Contract(entryPoint, EntryPointABI, provider);
 
@@ -44,22 +32,16 @@ export async function buildUserOp({
     target,
     value,
     data,
-  ]);
-
-  // 3. gas (static for now, ok for local)
-  const maxFeePerGas = 1n * 10n ** 9n; // 1 gwei
-  const maxPriorityFeePerGas = 1n * 10n ** 9n;
+  ]) as `0x${string}`;
 
   return {
     sender,
     nonce,
     initCode: "0x", // already deployed
     callData,
-    callGasLimit: 300_000n,
-    verificationGasLimit: 300_000n,
+    accountGasLimits: numberToHex(300000n, { size: 32 }),
     preVerificationGas: 50_000n,
-    maxFeePerGas,
-    maxPriorityFeePerGas,
+    gasFees: numberToHex(5000000n, { size: 32 }),
     paymasterAndData: "0x", // no paymaster yet
     signature: "0x", // filled later
   };
