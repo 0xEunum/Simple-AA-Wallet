@@ -1,0 +1,27 @@
+{
+  "name": "simple-aa-wallet",
+  "version": "1.0.0",
+  "description": "**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:userop": "ts-node userop/runners/runBuildUserOp.ts",
+    "sign:userop": "ts-node userop/runners/runSignUserOp.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ethers": "^6.16.0",
+    "viem": "^2.44.4"
+  },
+  "devDependencies": {
+    "dotenv": "^17.2.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
