@@ -10,7 +10,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:userop": "ts-node userop/runners/runBuildUserOp.ts",
-    "sign:userop": "ts-node userop/runners/runSignUserOp.ts"
+    "sign:userop": "ts-node userop/runners/runSignUserOp.ts",
+    "send:userop": "ts-node userop/runners/runSendUserOp.ts"
   },
   "keywords": [],
   "author": "",
