@@ -3,6 +3,7 @@ import { EntryPointABI } from "../utils/ABI/EntryPointABI";
 import { PackedUserOperation } from "viem";
 import { Address } from "viem";
 import { ethers } from "ethers";
+import "dotenv/config";
 
 export async function signUserOp(
   userOp: PackedUserOperation,
@@ -18,16 +19,12 @@ export async function signUserOp(
     EntryPointABI,
     provider,
   );
-  console.log("Got EP contract");
-  console.log("PackedUserOp in SignUserOp", userOp);
 
   const userOpHash = await entryPoint.getUserOpHash(userOp);
-  console.log("Got UserOpHash");
 
   const signature = await ownerAccount.signMessage({
     message: { raw: userOpHash as `0x${string}` },
   });
-  console.log("Signed hash");
 
   return {
     ...userOp,
