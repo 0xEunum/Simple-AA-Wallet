@@ -1,9 +1,10 @@
 import { privateKeyToAccount } from "viem/accounts";
 import { EntryPointABI } from "../utils/ABI/EntryPointABI";
-import { PackedUserOperation } from "viem";
+import { Hex, PackedUserOperation } from "viem";
 import { Address } from "viem";
 import { ethers } from "ethers";
 import "dotenv/config";
+import { recoverMessageAddress } from "viem";
 
 export async function signUserOp(
   userOp: PackedUserOperation,
@@ -23,7 +24,7 @@ export async function signUserOp(
   const userOpHash = await entryPoint.getUserOpHash(userOp);
 
   const signature = await ownerAccount.signMessage({
-    message: { raw: userOpHash as `0x${string}` },
+    message: userOpHash,
   });
 
   return {
