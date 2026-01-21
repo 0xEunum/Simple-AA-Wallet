@@ -11,7 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:userop": "ts-node userop/runners/runBuildUserOp.ts",
     "sign:userop": "ts-node userop/runners/runSignUserOp.ts",
-    "send:userop": "ts-node userop/runners/runSendUserOp.ts"
+    "send:userop": "ts-node userop/runners/runSendUserOp.ts",
+    "start": "ts-node src/index.ts"
   },
   "keywords": [],
   "author": "",
